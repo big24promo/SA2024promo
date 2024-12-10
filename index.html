@@ -18,18 +18,18 @@
             background: linear-gradient(45deg, #2a8ac4, #2b7db1);
             color: white;
             text-align: center;
-            padding: 30px;
+            padding: 4px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-bottom: px solid #4a8ec2;
+            border-bottom: 4px solid #4a8ec2;
         }
         header h1 {
-            font-size: 2.4rem;
+            font-size: 2.5rem;
             font-weight: bold;
             margin: 0;
         }
         header p {
             font-size: 1.2rem;
-            margin-top: 8px;
+            margin-top: 1px;
             font-weight: 400;
         }
 
@@ -170,13 +170,29 @@
         }
         .percentage-label {
             position: absolute;
-            top: 10%;
-            left: 50%;
-            transform: translate(-50%, -50%);
             color: white;
-            font-size: 2rem;
+            font-size: 1.2rem;
             font-weight: bold;
-            display: none;
+        }
+        #label-top {
+            top: 6%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #label-bottom {
+            bottom: 6%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #label-left {
+            left: 6%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        #label-right {
+            right: 6%;
+            top: 50%;
+            transform: translateY(-50%);
         }
 
         /* Sponsors Section */
@@ -239,7 +255,7 @@
             <button class="buy-btn" id="buy-btn-1" data-price="4000">Buy Now</button>
         </div>
         <div class="product-card">
-            <img src="https://big24promo.github.io/SA2024promo/images/checkers.jpg">
+            <img src="https://big24promo.github.io/SA2024promo/images/checkers.jpg" alt="Checkers Voucher">
             <h3>4000 Rands Checkers Voucher</h3>
             <p>Shop groceries with ease.</p>
             <div class="price-old" id="price-old-2" style="display: none;">R4000</div>
@@ -247,7 +263,7 @@
             <button class="buy-btn" id="buy-btn-2" data-price="4000">Buy Now</button>
         </div>
         <div class="product-card">
-            <img src="https://big24promo.github.io/SA2024promo/images/takealot.png">
+            <img src="https://big24promo.github.io/SA2024promo/images/takealot.png" alt="Takealot Voucher">
             <h3>4000 Rands Takealot Voucher</h3>
             <p>Shop anything on Takealot.</p>
             <div class="price-old" id="price-old-3" style="display: none;">R4000</div>
@@ -268,8 +284,10 @@
     <section class="spin-wheel-section">
         <div class="spin-wheel">
             <div class="arrow"></div>
-            <div class="percentage-label 1" id="percentageLabel">99.5%</div>
-            <div class="percentage-label 2" id="percentageLabel">90.5%</div>
+            <div class="percentage-label" id="label-top">99.5%</div>
+            <div class="percentage-label" id="label-bottom">80%</div>
+            <div class="percentage-label" id="label-left">40%</div>
+            <div class="percentage-label" id="label-right">60%</div>
         </div>
         <button class="spin-btn" onclick="spinWheel()">Spin the Wheel</button>
         <div class="result" id="result"></div>
@@ -290,38 +308,33 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 South Africa Giveaway. All Rights Reserved.</p>
+        <p>&copy; 2024 Big South Africa Giveaway. All Rights Reserved.</p>
     </footer>
 
     <script>
-        const wheel = document.querySelector('.spin-wheel');
-        const percentageLabel = document.getElementById("percentageLabel");
-        const result = document.getElementById("result");
-        const buttons = document.querySelectorAll(".buy-btn");
-        const prices = document.querySelectorAll(".price");
-        const oldPrices = document.querySelectorAll(".price-old");
-
         function spinWheel() {
-            percentageLabel.style.display = "none"; // Hide percentage until after spin
-            wheel.style.transition = "transform 4s cubic-bezier(0.17, 0.67, 0.83, 0.67)";
-            const randomSpin = Math.floor(3600 + Math.random() * 360); // Random spin value
-            const newPrice = 20;
-            const discount = 99.5;
-
-            wheel.style.transform = `rotate(${randomSpin}deg)`; // Spin the wheel
-
+            // Perform wheel spin animation
+            document.querySelector('.spin-wheel').style.transform = 'rotate(7200deg)';
             setTimeout(() => {
-                percentageLabel.style.display = "block"; // Show the percentage after spin
-                result.textContent = `🎉 Congratulations! You won a ${discount}% discount!`;
-                percentageLabel.textContent = `${discount}%`;
+                document.getElementById('result').innerText = "You won 99.5% off!";
+                updatePrices();
+            }, 4000);
+        }
 
-                prices.forEach(price => price.textContent = `R${newPrice}`);
-                oldPrices.forEach(price => price.style.display = "inline"); // Show the struck-through price only after discount
-                buttons.forEach(button => {
-                    button.textContent = `Buy for R${newPrice}`;
-                    button.onclick = () => window.location.href = "https://www.fg.bv";
-                });
-            }, 4000); // Delay for spin to finish
+        function updatePrices() {
+            const products = document.querySelectorAll('.product-card');
+            products.forEach(product => {
+                const priceElement = product.querySelector('.price');
+                const oldPriceElement = product.querySelector('.price-old');
+                const button = product.querySelector('button');
+                const originalPrice = product.querySelector('button').dataset.price;
+
+                oldPriceElement.style.display = 'block';
+                priceElement.innerText = "R20";
+                button.innerText = "Buy for R20";
+
+                oldPriceElement.innerText = `R${originalPrice}`;
+            });
         }
     </script>
 </body>
