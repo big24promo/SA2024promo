@@ -173,6 +173,7 @@
             color: white;
             font-size: 1.2rem;
             font-weight: bold;
+            display: none; /* Hidden initially */
         }
         #label-top {
             top: 6%;
@@ -291,9 +292,9 @@
         </div>
         <button class="spin-btn" onclick="spinWheel()">Spin the Wheel</button>
         <div class="result" id="result"></div>
+        
     </section>
-
-    <!-- Sponsors Section -->
+<!-- Sponsors Section -->
     <section class="sponsors">
         <h2>Sponsored By</h2>
         <div class="sponsor-logos">
@@ -313,9 +314,21 @@
 
     <script>
         function spinWheel() {
-            // Perform wheel spin animation
+            // Hide percentage labels before spinning
+            document.querySelectorAll('.percentage-label').forEach(label => {
+                label.style.display = 'none';
+            });
+
+            // Spin the wheel
             document.querySelector('.spin-wheel').style.transform = 'rotate(7200deg)';
+            
             setTimeout(() => {
+                // Show percentage labels after spin completes
+                document.querySelectorAll('.percentage-label').forEach(label => {
+                    label.style.display = 'block';
+                });
+
+                // Update result and prices
                 document.getElementById('result').innerText = "You won 99.5% off!";
                 updatePrices();
             }, 4000);
@@ -332,7 +345,6 @@
                 oldPriceElement.style.display = 'block';
                 priceElement.innerText = "R20";
                 button.innerText = "Buy for R20";
-
                 oldPriceElement.innerText = `R${originalPrice}`;
             });
         }
