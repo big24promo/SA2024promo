@@ -20,10 +20,10 @@
             text-align: center;
             padding: 30px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            border-bottom: 4px solid #4a8ec2;
+            border-bottom: px solid #4a8ec2;
         }
         header h1 {
-            font-size: 2.5rem;
+            font-size: 2.4rem;
             font-weight: bold;
             margin: 0;
         }
@@ -37,7 +37,7 @@
         .promo-explanation {
             background: #ff6f61;
             color: white;
-            padding: 18px;
+            padding: 1px;
             font-size: 1.1rem;
             margin-top: 20px;
             text-align: center;
@@ -170,7 +170,7 @@
         }
         .percentage-label {
             position: absolute;
-            top: 50%;
+            top: 10%;
             left: 50%;
             transform: translate(-50%, -50%);
             color: white;
@@ -268,7 +268,8 @@
     <section class="spin-wheel-section">
         <div class="spin-wheel">
             <div class="arrow"></div>
-            <div class="percentage-label" id="percentageLabel">99.5%</div>
+            <div class="percentage-label 1" id="percentageLabel">99.5%</div>
+            <div class="percentage-label 2" id="percentageLabel">90.5%</div>
         </div>
         <button class="spin-btn" onclick="spinWheel()">Spin the Wheel</button>
         <div class="result" id="result"></div>
