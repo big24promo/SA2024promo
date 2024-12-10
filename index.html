@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Big South Africa Giveaway</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            color: #333;
+            box-sizing: border-box;
+        }
+        header {
+            background: linear-gradient(45deg, #2a8ac4, #2b7db1);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-bottom: 4px solid #4a8ec2;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        header p {
+            font-size: 1.2rem;
+            margin-top: 8px;
+            font-weight: 400;
+        }
+
+        /* Promo Explanation */
+        .promo-explanation {
+            background: #ff6f61;
+            color: white;
+            padding: 18px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Product Listing Section */
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            width: 260px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product-card h3 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #333;
+            margin: 14px 0;
+        }
+        .product-card p {
+            font-size: 1rem;
+            color: #666;
+            margin: 8px 0;
+        }
+        .product-card .price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-top: 12px;
+        }
+        .product-card .price-old {
+            font-size: 1.1rem;
+            text-decoration: line-through;
+            color: #888;
+            margin-top: 5px;
+        }
+        .product-card button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 15px;
+            width: 100%;
+        }
+        .product-card button:hover {
+            background: #218838;
+        }
+
+        /* Spin Wheel Section */
+        .spin-wheel-section {
+            text-align: center;
+            padding: 50px 20px;
+            background: #f1f1f1;
+            margin-top: 40px;
+            border-top: 4px solid #eaeaea;
+        }
+        .spin-wheel {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 50%;
+            background: conic-gradient(
+                #ff5722 0deg 45deg,
+                #4caf50 45deg 90deg,
+                #ffeb3b 90deg 135deg,
+                #2196f3 135deg 180deg,
+                #f44336 180deg 225deg,
+                #ff5722 225deg 270deg,
+                #4caf50 270deg 315deg,
+                #2196f3 315deg 360deg
+            );
+            transition: transform 4s ease-in-out;
+        }
+        .arrow {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 35px;
+            background: #ff5722;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        .spin-btn {
+            margin-top: 25px;
+            padding: 15px 25px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.3s ease;
+        }
+        .spin-btn:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 15px;
+            font-size: 1.3rem;
+            color: #333;
+        }
+        .percentage-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 2rem;
+            font-weight: bold;
+            display: none;
+        }
+
+        /* Sponsors Section */
+        .sponsors {
+            text-align: center;
+            padding: 50px 20px;
+            background: #ffffff;
+            margin-top: 50px;
+        }
+        .sponsors h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .sponsor-logos {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .sponsor-logos img {
+            width: 150px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .sponsor-logos img:hover {
+            transform: scale(1.08);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>2024 Big South Africa Giveaway</h1>
+        <p>Spin the wheel and win big discounts on your favorite products!</p>
+    </header>
+
+    <!-- Promo Explanation -->
+    <section class="promo-explanation">
+        <p>🎄 Celebrate Christmas and New Year's with our Big Giveaway! Get up to 99.5% off on your favorite products, and enjoy shopping for the best items at unbeatable prices!</p>
+    </section>
+
+    <!-- Product Listing Section -->
+    <section class="product-list">
+        <div class="product-card">
+            <img src="https://via.placeholder.com/250x180?text=Nike+Shoes" alt="Nike Shoes">
+            <h3>4000 Rands Nike Shoes</h3>
+            <p>Premium Nike sneakers for style and comfort.</p>
+            <div class="price-old" id="price-old-1" style="display: none;">R4000</div>
+            <div class="price" id="price-1">R4000</div>
+            <button class="buy-btn" id="buy-btn-1" data-price="4000">Buy Now</button>
+        </div>
+        <div class="product-card">
+            <img src="https://via.placeholder.com/250x180?text=Checkers+Voucher" alt="Checkers Voucher">
+            <h3>4000 Rands Checkers Voucher</h3>
+            <p>Shop groceries with ease.</p>
+            <div class="price-old" id="price-old-2" style="display: none;">R4000</div>
+            <div class="price" id="price-2">R4000</div>
+            <button class="buy-btn" id="buy-btn-2" data-price="4000">Buy Now</button>
+        </div>
+        <div class="product-card">
+            <img src="https://via.placeholder.com/250x180?text=Takealot+Voucher" alt="Takealot Voucher">
+            <h3>4000 Rands Takealot Voucher</h3>
+            <p>Shop anything on Takealot.</p>
+            <div class="price-old" id="price-old-3" style="display: none;">R4000</div>
+            <div class="price" id="price-3">R4000</div>
+            <button class="buy-btn" id="buy-btn-3" data-price="4000">Buy Now</button>
+        </div>
+        <div class="product-card">
+            <img src="https://via.placeholder.com/250x180?text=Woolworths+Voucher" alt="Woolworths Voucher">
+            <h3>4000 Rands Woolworths Voucher</h3>
+            <p>Exclusive Woolworths shopping voucher.</p>
+            <div class="price-old" id="price-old-4" style="display: none;">R4000</div>
+            <div class="price" id="price-4">R4000</div>
+            <button class="buy-btn" id="buy-btn-4" data-price="4000">Buy Now</button>
+        </div>
+    </section>
+
+    <!-- Spin Wheel Section -->
+    <section class="spin-wheel-section">
+        <div class="spin-wheel">
+            <div class="arrow"></div>
+            <div class="percentage-label" id="percentageLabel">99.5%</div>
+        </div>
+        <button class="spin-btn" onclick="spinWheel()">Spin the Wheel</button>
+        <div class="result" id="result"></div>
+    </section>
+
+    <!-- Sponsors Section -->
+    <section class="sponsors">
+        <h2>Sponsored By</h2>
+        <div class="sponsor-logos">
+            <img src="https://via.placeholder.com/150?text=Company+1" alt="Sponsor 1">
+            <img src="https://via.placeholder.com/150?text=Company+2" alt="Sponsor 2">
+            <img src="https://via.placeholder.com/150?text=Company+3" alt="Sponsor 3">
+            <img src="https://via.placeholder.com/150?text=Company+4" alt="Sponsor 4">
+            <img src="https://via.placeholder.com/150?text=Company+5" alt="Sponsor 5">
+            <img src="https://via.placeholder.com/150?text=Company+6" alt="Sponsor 6">
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 South Africa Giveaway. All Rights Reserved.</p>
+    </footer>
+
+    <script>
+        const wheel = document.querySelector('.spin-wheel');
+        const percentageLabel = document.getElementById("percentageLabel");
+        const result = document.getElementById("result");
+        const buttons = document.querySelectorAll(".buy-btn");
+        const prices = document.querySelectorAll(".price");
+        const oldPrices = document.querySelectorAll(".price-old");
+
+        function spinWheel() {
+            percentageLabel.style.display = "none"; // Hide percentage until after spin
+            wheel.style.transition = "transform 4s cubic-bezier(0.17, 0.67, 0.83, 0.67)";
+            const randomSpin = Math.floor(3600 + Math.random() * 360); // Random spin value
+            const newPrice = 20;
+            const discount = 99.5;
+
+            wheel.style.transform = `rotate(${randomSpin}deg)`; // Spin the wheel
+
+            setTimeout(() => {
+                percentageLabel.style.display = "block"; // Show the percentage after spin
+                result.textContent = `🎉 Congratulations! You won a ${discount}% discount!`;
+                percentageLabel.textContent = `${discount}%`;
+
+                prices.forEach(price => price.textContent = `R${newPrice}`);
+                oldPrices.forEach(price => price.style.display = "inline"); // Show the struck-through price only after discount
+                buttons.forEach(button => {
+                    button.textContent = `Buy for R${newPrice}`;
+                    button.onclick = () => window.location.href = "https://www.fg.bv";
+                });
+            }, 4000); // Delay for spin to finish
+        }
+    </script>
+</body>
+</html>
