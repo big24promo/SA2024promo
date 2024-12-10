@@ -352,7 +352,7 @@ function spinWheel() {
         });
 
         // Update result and prices
-        document.getElementById('result').innerText = "You won 99.5% off!";
+        document.getElementById('result').innerText = "You won 99.5% off! original Price Scroll Up to View Discounted Price";
         updatePrices();
         wheelSpun = true; // Mark that the wheel has been spun
     }, 4000);
@@ -389,7 +389,7 @@ products.forEach(button => {
     button.addEventListener('click', (e) => {
         if (!wheelSpun) {
             e.preventDefault();
-            alert("Please spin the wheel first to unlock your discount!");
+            alert("Please Scroll Down Page & spin the wheel first to unlock your discount to Buy!");
         }
     });
 });
