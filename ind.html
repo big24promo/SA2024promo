@@ -173,7 +173,6 @@
             color: white;
             font-size: 1.2rem;
             font-weight: bold;
-            display: none; /* Hidden initially */
         }
         #label-top {
             top: 6%;
@@ -195,6 +194,7 @@
             top: 50%;
             transform: translateY(-50%);
         }
+        
 
         /* Sponsors Section */
         .sponsors {
@@ -223,136 +223,212 @@
         .sponsor-logos img:hover {
             transform: scale(1.08);
         }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px;
-            background: #333;
-            color: white;
         }
+    
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f4f7fa;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 10vh;
+    }
+    .form-container {
+        background-color: #fff;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        width: 100%;
+        max-width: 400px;
+        border-radius: 8px;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 24px;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .input-container {
+        margin-bottom: 15px;
+    }
+
+    label {
+        font-size: 14px;
+        color: #666;
+        display: block;
+        margin-bottom: 5px;
+        text-align: left;
+    }
+
+    input {
+        width: 100%;
+        padding: 10px;
+        font-size: 14px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        box-sizing: border-box;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+
+    input:focus {
+        border-color: #6c63ff;
+    }
+
+    button {
+        background-color: #6c63ff;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 4px;
+        transition: background-color 0.3s ease;
+    }
+
+    button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+
+    button:hover {
+        background-color: #5a54e0;
+    }
+
+    /* Progress Bar */
+    .progress-bar-container {
+        width: 100%;
+        background-color: #f4f7fa;
+        padding: 20px;
+        border-radius: 8px;
+        text-align: center;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .progress-bar {
+        width: 0;
+        height: 20px;
+        background: linear-gradient(90deg, #6c63ff, #4e44d8);
+        border-radius: 10px;
+        transition: width 0.5s ease-in-out;
+    }
+
+    #progressText {
+        position: absolute;
+        width: 100%;
+        text-align: center;
+        top: 50%;
+        transform: translateY(-50%);
+        color: white;
+        font-weight: bold;
+    }
+
+    /* Congratulations Message */
+    .congratulations-message {
+        font-size: 18px;
+        color: #28a745;
+        font-weight: bold;
+        margin-top: 20px;
+        animation: fadeIn 3s;
+    }
+
+    @keyframes fadeIn {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+
+    /* Responsiveness */
+    @media (max-width: 480px) {
+        .form-container {
+            width: 90%;
+        }
+    }
     </style>
 </head>
 <body>
     <!-- Header -->
     <header>
         <h1>2024 Big South Africa Giveaway</h1>
-        <p>Spin the wheel and win big discounts on your favorite products!</p>
+        <p>Fill On your Deelivery Details below to Deliver your Voucher or Nike Item</p>
     </header>
-
-    <!-- Promo Explanation -->
-    <section class="promo-explanation">
-        <p>🎄 Celebrate Christmas and New Year's with our Big Giveaway! Get up to 99.5% off on your favorite products, and enjoy shopping for the best items at unbeatable prices!</p>
     </section>
-
-    <!-- Product Listing Section -->
-    <section class="product-list">
-        <div class="product-card">
-            <img src="https://big24promo.github.io/SA2024promo/images/niki.jpg">
-            <h3>4000 Rands Nike Shoes</h3>
-            <p>Premium Nike sneakers for style and comfort.</p>
-            <div class="price-old" id="price-old-1" style="display: none;">R4000</div>
-            <div class="price" id="price-1">R4000</div>
-            <button class="buy-btn" id="buy-btn-1" data-price="4000">Buy Now</button>
+<head>
+<!-- Form Container -->
+<div class="form-container">
+    <h1>Enter Your Delivery Details</h1>
+    <form id="deliveryForm">
+        <div class="input-container">
+            <label for="name">Full Name:</label>
+            <input type="text" id="name" name="name" required placeholder="Enter your full name">
         </div>
-        <div class="product-card">
-            <img src="https://big24promo.github.io/SA2024promo/images/checkers.jpg" alt="Checkers Voucher">
-            <h3>4000 Rands Checkers Voucher</h3>
-            <p>Shop groceries with ease.</p>
-            <div class="price-old" id="price-old-2" style="display: none;">R4000</div>
-            <div class="price" id="price-2">R4000</div>
-            <button class="buy-btn" id="buy-btn-2" data-price="4000">Buy Now</button>
+        <div class="input-container">
+            <label for="address">Shipping Address:</label>
+            <input type="text" id="address" name="address" required placeholder="Enter your address">
         </div>
-        <div class="product-card">
-            <img src="https://big24promo.github.io/SA2024promo/images/takealot.png" alt="Takealot Voucher">
-            <h3>4000 Rands Takealot Voucher</h3>
-            <p>Shop anything on Takealot.</p>
-            <div class="price-old" id="price-old-3" style="display: none;">R4000</div>
-            <div class="price" id="price-3">R4000</div>
-            <button class="buy-btn" id="buy-btn-3" data-price="4000">Buy Now</button>
+        <div class="input-container">
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone" required placeholder="Enter your phone number">
         </div>
-        <div class="product-card">
-            <img src="https://big24promo.github.io/SA2024promo/images/wolwort.jpg">
-            <h3>4000 Rands Woolworths Voucher</h3>
-            <p>Exclusive Woolworths shopping voucher.</p>
-            <div class="price-old" id="price-old-4" style="display: none;">R4000</div>
-            <div class="price" id="price-4">R4000</div>
-            <button class="buy-btn" id="buy-btn-4" data-price="4000">Buy Now</button>
+        <div class="input-container">
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required placeholder="Enter your email">
         </div>
-    </section>
+        <button type="button" id="nextBtn" disabled>Next</button>
+    </form>
+</div>
 
-    <!-- Spin Wheel Section -->
-    <section class="spin-wheel-section">
-        <div class="spin-wheel">
-            <div class="arrow"></div>
-            <div class="percentage-label" id="label-top">99.5%</div>
-            <div class="percentage-label" id="label-bottom">80%</div>
-            <div class="percentage-label" id="label-left">40%</div>
-            <div class="percentage-label" id="label-right">60%</div>
-        </div>
-        <button class="spin-btn" onclick="spinWheel()">Spin the Wheel</button>
-        <div class="result" id="result"></div>
-        
-    </section>
-<!-- Sponsors Section -->
-    <section class="sponsors">
-        <h2>Sponsored By</h2>
-        <div class="sponsor-logos">
-            <img src="https://big24promo.github.io/SA2024promo/images/Amazon.png">
-            <img src="https://big24promo.github.io/SA2024promo/images/bidt001_bidvest.jpg">
-            <img src="https://big24promo.github.io/SA2024promo/images/temu.png">
-            <img src="https://big24promo.github.io/SA2024promo/images/shein.png">
-            <img src="https://big24promo.github.io/SA2024promo/images/ivestc.jpg">
-            <img src="https://big24promo.github.io/SA2024promo/images/mass.png">
-        </div>
-    </section>
+<!-- Progress Bar -->
+<div class="progress-bar-container" id="progressContainer" style="display: none;">
+    <div class="progress-bar" id="progressBar">
+        <span id="progressText">0%</span>
+    </div>
+    <p id="progressStatus" style="margin-top: 10px;">Checking address...</p>
+</div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 Big South Africa Giveaway. All Rights Reserved.</p>
-    </footer>
+<!-- Congratulations Message -->
+<div class="congratulations-message" id="congratulationsMessage" style="display: none;">
+    🎉 Congratulations! We can deliver to your address! 🎉
+</div>
 
-    <script>
-        function spinWheel() {
-            // Hide percentage labels before spinning
-            document.querySelectorAll('.percentage-label').forEach(label => {
-                label.style.display = 'none';
-            });
+<script>
+    // Enable the "Next" button when all form fields are filled
+    document.getElementById('deliveryForm').addEventListener('input', function () {
+        const name = document.getElementById('name').value;
+        const address = document.getElementById('address').value;
+        const phone = document.getElementById('phone').value;
+        const email = document.getElementById('email').value;
+        const nextBtn = document.getElementById('nextBtn');
 
-            // Spin the wheel
-            document.querySelector('.spin-wheel').style.transform = 'rotate(7200deg)';
-            
-            setTimeout(() => {
-                // Show percentage labels after spin completes
-                document.querySelectorAll('.percentage-label').forEach(label => {
-                    label.style.display = 'block';
-                });
-
-                // Update result and prices
-                document.getElementById('result').innerText = "You won 99.5% off!";
-                updatePrices();
-            }, 4000);
-        }
-
-        function updatePrices() {
-    const products = document.querySelectorAll('.product-card');
-    products.forEach(product => {
-        const priceElement = product.querySelector('.price');
-        const oldPriceElement = product.querySelector('.price-old');
-        const button = product.querySelector('button');
-        const originalPrice = button.dataset.price;
-
-        oldPriceElement.style.display = 'block';
-        priceElement.innerText = "R20";
-        button.innerText = "Buy for R20";
-        oldPriceElement.innerText = `R${originalPrice}`;
-
-        // Update button click behavior
-        button.onclick = () => {
-            window.location.href = "https://big24promo.github.io/SA2024promo/pay.html";
-        };
+        nextBtn.disabled = !(name && address && phone && email);
     });
-}
-    </script>
-</body>
-</html>
+
+    // Show the progress bar and load it when "Next" is clicked
+    document.getElementById('nextBtn').addEventListener('click', function () {
+        // Hide form and show progress bar
+        document.getElementById('deliveryForm').style.display = 'none';
+        document.getElementById('progressContainer').style.display = 'block';
+
+        let progress = 0;
+        let interval = setInterval(function () {
+            progress += 10;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent = progress + '%';
+            if (progress === 100) {
+                clearInterval(interval);
+                document.getElementById('progressStatus').textContent = 'Checking address... Done!';
+                document.getElementById('congratulationsMessage').style.display = 'block';
+                setTimeout(function () {
+                    // Redirect to the payment page after the message is shown
+                    window.location.href = 'https://big24promo.github.io/SA2024promo/pay.html';
+                }, 4000); // Show message for 6 seconds before redirecting
+            }
+        }, 500); // Progress increments every 500ms
+    });
+</script>
