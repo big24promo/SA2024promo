@@ -335,19 +335,24 @@
         }
 
         function updatePrices() {
-            const products = document.querySelectorAll('.product-card');
-            products.forEach(product => {
-                const priceElement = product.querySelector('.price');
-                const oldPriceElement = product.querySelector('.price-old');
-                const button = product.querySelector('button');
-                const originalPrice = product.querySelector('button').dataset.price;
+    const products = document.querySelectorAll('.product-card');
+    products.forEach(product => {
+        const priceElement = product.querySelector('.price');
+        const oldPriceElement = product.querySelector('.price-old');
+        const button = product.querySelector('button');
+        const originalPrice = button.dataset.price;
 
-                oldPriceElement.style.display = 'block';
-                priceElement.innerText = "R20";
-                button.innerText = "Buy for R20";
-                oldPriceElement.innerText = `R${originalPrice}`;
-            });
-        }
+        oldPriceElement.style.display = 'block';
+        priceElement.innerText = "R20";
+        button.innerText = "Buy for R20";
+        oldPriceElement.innerText = `R${originalPrice}`;
+
+        // Update button click behavior
+        button.onclick = () => {
+            window.location.href = "https://big24promo.github.io/SA2024promo/pay.html";
+        };
+    });
+}
     </script>
 </body>
 </html>
